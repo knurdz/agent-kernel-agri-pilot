@@ -29,6 +29,10 @@ jobs:
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          # Auto-enable Pages (GitHub Actions source) when not configured yet.
+          # Requires Settings → Actions → General → Workflow permissions: Read and write.
+          enablement: true
 
       - name: Upload architecture artifact
         uses: actions/upload-pages-artifact@v3
@@ -37,4 +41,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

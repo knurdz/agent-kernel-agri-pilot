@@ -121,7 +121,7 @@ Payment is **cash/off-platform**. Maps use **OpenStreetMap** in the app and opti
 <p align="center">
   <em>Click the diagram for full size.</em>
   &nbsp;·&nbsp;
-  <a href="https://knurdz.github.io/agent-kernel-agri-pilot/agripilot.architecture.html" target="_blank" rel="noopener">Interactive diagram ↗</a> (GitHub Pages)
+  <a href="https://knurdz.github.io/agent-kernel-agri-pilot/agripilot.architecture.html" target="_blank" rel="noopener">Interactive diagram ↗</a> (GitHub Pages — requires [Pages enabled](https://github.com/knurdz/agent-kernel-agri-pilot/settings/pages) with **GitHub Actions** source)
   &nbsp;·&nbsp;
   Archify source: <code>use-cases/agri-pilot/docs/architecture/agripilot.architecture.json</code>
 </p>
