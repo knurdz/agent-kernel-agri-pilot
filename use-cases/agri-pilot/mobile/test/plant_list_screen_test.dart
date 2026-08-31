@@ -17,7 +17,12 @@ class _FakePlantsRepository extends PlantsRepository {
   Future<List<PlantSummary>> listPlants() async => List.unmodifiable(_plants);
 
   @override
-  Future<PlantSummary> createPlant({required String crop, String? name, int? listingId}) async {
+  Future<PlantSummary> createPlant({
+    required String crop,
+    String? name,
+    int? listingId,
+    DateTime? plantedOn,
+  }) async {
     final plant = PlantSummary(
       id: _plants.length + 1,
       crop: crop,

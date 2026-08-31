@@ -28,6 +28,8 @@ void main() {
       'created_at': '2026-01-01T00:00:00Z',
     });
     expect(listing.crop, 'tomato');
+  });
+
   test('UserMe parses rider JSON', () {
     final user = UserMe.fromJson({
       'id': 3,

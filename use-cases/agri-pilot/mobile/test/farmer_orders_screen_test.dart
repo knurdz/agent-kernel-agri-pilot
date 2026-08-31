@@ -9,7 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _FakeDeliveryRepository extends DeliveryRepository {
-  _FakeDeliveryRepository(this.orders) : super(Dio());
+  _FakeDeliveryRepository(this.orders) : super(Dio(), 'farmer');
 
   final List<OrderItem> orders;
 

@@ -46,7 +46,7 @@ void main() {
     test('returns helpful error for invalid input', () {
       expect(
         validatePhone('74115199'),
-        'Enter a valid number, e.g. 077 123 4567 or +94771234567.',
+        'Enter a valid phone number.',
       );
     });
 
