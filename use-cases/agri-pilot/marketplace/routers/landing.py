@@ -377,22 +377,58 @@ def _build_landing_html() -> str:
       padding: 3.5rem 0 2.5rem;
       text-align: center;
     }}
-    .hero-tag-wrap {{
-      margin-bottom: 1.25rem;
+    .hero-badge-wrap {{
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
     }}
-    .hero-tag {{
+    .hero-unified-badge {{
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: #FFFFFF;
+      border: 1px solid rgba(22, 101, 52, 0.22);
+      border-radius: var(--radius-pill);
+      padding: 0.35rem 1.1rem 0.35rem 0.4rem;
+      box-shadow: 0 2px 8px rgba(6, 60, 46, 0.06);
+      color: var(--dark);
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }}
+    .hero-unified-badge:hover {{
+      border-color: var(--green-600);
+      box-shadow: 0 4px 14px rgba(6, 60, 46, 0.12);
+      transform: translateY(-1px);
+    }}
+    .badge-pill-inner {{
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: linear-gradient(135deg, var(--green-700), var(--green-800));
+      color: #FFFFFF;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.7rem;
+      border-radius: var(--radius-pill);
+    }}
+    .badge-content {{
+      color: var(--green-900);
+      letter-spacing: -0.01em;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      background: #E6F4EA;
-      color: var(--green-800);
-      font-size: 0.78rem;
+    }}
+    .badge-arrow {{
+      color: var(--green-600);
       font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.9rem;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(5, 150, 105, 0.2);
+      transition: transform 0.15s ease;
+    }}
+    .hero-unified-badge:hover .badge-arrow {{
+      transform: translateX(3px);
     }}
     .hero-title {{
       font-size: clamp(2.2rem, 5vw, 3.8rem);
@@ -423,21 +459,6 @@ def _build_landing_html() -> str:
     }}
 
     /* Hero value proposition (top highlight) */
-    .hero-agent-badge {{
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--green-800);
-      background: linear-gradient(135deg, var(--green-50), #E8F5E9);
-      border: 1px solid rgba(22, 101, 52, 0.15);
-      padding: 0.4rem 0.9rem;
-      border-radius: var(--radius-pill);
-      margin-bottom: 1.25rem;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }}
     .hero-value-strip {{
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1161,6 +1182,15 @@ def _build_landing_html() -> str:
     @media (max-width: 600px) {{
       .top-bar-inner {{ justify-content: center; text-align: center; }}
       .top-contacts {{ justify-content: center; }}
+      .hero-unified-badge {{
+        font-size: 0.74rem;
+        padding: 0.3rem 0.75rem 0.3rem 0.35rem;
+        gap: 0.45rem;
+      }}
+      .badge-pill-inner {{
+        font-size: 0.65rem;
+        padding: 0.2rem 0.5rem;
+      }}
       .hero-cta-group {{ flex-direction: column; width: 100%; }}
       .hero-cta-group .btn {{ width: 100%; }}
       .footer-top {{
@@ -1235,11 +1265,12 @@ def _build_landing_html() -> str:
     <!-- Hero Section -->
     <section class="hero" id="hero">
       <div class="container">
-        <div class="hero-tag-wrap" style="margin-bottom: 0.75rem;">
-          <span class="hero-agent-badge">&#129302; Powered by Multi-Agent AI</span>
-        </div>
-        <div class="hero-tag-wrap">
-          <span class="hero-tag">&#127807; No Middlemen &middot; Direct Farm-to-Table</span>
+        <div class="hero-badge-wrap">
+          <a class="hero-unified-badge" href="#features">
+            <span class="badge-pill-inner">&#129302; Multi-Agent AI</span>
+            <span class="badge-content">&#127807; No Middlemen &middot; Direct Farm-to-Table Marketplace</span>
+            <span class="badge-arrow">&rarr;</span>
+          </a>
         </div>
         <h1 class="hero-title">
           Farmers Earn More. <span class="accent">Fresh Food</span> at Lower Cost. Citizens Deliver &amp; Earn.

@@ -23,6 +23,8 @@
 <p align="center">
   <a href="https://github.com/knurdz/agent-kernel-agri-pilot/releases?q=agripilot-mobile"><strong>Download Android APK</strong></a>
   &nbsp;·&nbsp;
+  <a href="https://t.me/agripilot_bot" target="_blank" rel="noopener"><strong>Telegram bot</strong></a>
+  &nbsp;·&nbsp;
   <a href="#quick-start">Quick start</a>
   &nbsp;·&nbsp;
   <a href="#features">Features</a>
