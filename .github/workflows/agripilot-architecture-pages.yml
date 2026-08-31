@@ -1,0 +1,40 @@
+name: AgriPilot architecture diagram (Pages)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'use-cases/agri-pilot/docs/architecture/**'
+      - '.github/workflows/agripilot-architecture-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: agripilot-architecture-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload architecture artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: use-cases/agri-pilot/docs/architecture
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

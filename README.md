@@ -29,7 +29,7 @@
   &nbsp;·&nbsp;
   <a href="#production-vps-deployment">VPS deploy</a>
   &nbsp;·&nbsp;
-  <a href="use-cases/agri-pilot/docs/architecture/agripilot.architecture.html">Architecture</a>
+  <a href="#architecture">Architecture</a>
   &nbsp;·&nbsp;
   <a href="use-cases/agri-pilot/mobile/README.md">Mobile dev</a>
 </p>
@@ -113,12 +113,18 @@ Payment is **cash/off-platform**. Maps use **OpenStreetMap** in the app and opti
 ## Architecture
 
 <p align="center">
-  <a href="use-cases/agri-pilot/docs/architecture/agripilot.architecture.html">
-    <img src="use-cases/agri-pilot/docs/architecture/agripilot.architecture.png" alt="AgriPilot runtime architecture" width="900" />
+  <a href="use-cases/agri-pilot/docs/architecture/agripilot.architecture.png">
+    <img src="use-cases/agri-pilot/docs/architecture/agripilot.architecture.png" alt="AgriPilot runtime architecture" width="100%" />
   </a>
 </p>
 
-<p align="center"><em>Click for the interactive diagram (Archify). Source: <code>use-cases/agri-pilot/docs/architecture/agripilot.architecture.json</code></em></p>
+<p align="center">
+  <em>Click the diagram for full size.</em>
+  &nbsp;·&nbsp;
+  <a href="https://knurdz.github.io/agent-kernel-agri-pilot/agripilot.architecture.html" target="_blank" rel="noopener">Interactive diagram ↗</a> (GitHub Pages)
+  &nbsp;·&nbsp;
+  Archify source: <code>use-cases/agri-pilot/docs/architecture/agripilot.architecture.json</code>
+</p>
 
 **Runtime flow**
 
