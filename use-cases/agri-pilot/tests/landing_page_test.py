@@ -33,7 +33,10 @@ def test_landing_page_returns_html():
     assert 'href="/download"' in body
     assert 'href="/architecture"' in body
     assert 'href="/docs"' in body
-    assert "From Crop Diagnosis to" in body or "From crop diagnosis to doorstep delivery" in body
+    assert "Farmers Earn More" in body
+    assert "Fresh Food" in body and "Lower Cost" in body
+    assert "Citizens Deliver" in body
+    assert "Multi-Agent AI" in body
     assert "Plant Health" in body or "Plant tracking" in body
     assert "Live Tracking" in body or "Live delivery" in body
     assert "Farmers" in body
@@ -41,6 +44,9 @@ def test_landing_page_returns_html():
     assert "Delivery Riders" in body
     assert "support@knurdz.org" in body
     assert "+94 77 123 4567" in body
+    assert "https://github.com/knurdz/agent-kernel-agri-pilot" in body
+    assert "telegram-chat.jpg" in body
+    assert "Telegram Bot in Production" in body
 
 
 def test_architecture_page_returns_html():
@@ -68,7 +74,7 @@ def test_landing_page_links_architecture():
 def test_screenshot_assets():
     client = _client()
     screenshots_dir = Path(__file__).resolve().parents[1] / "docs" / "screenshots"
-    for name in ("home.png", "advisor.png", "plant-detail.png", "orders.png", "delivery-tracking.jpg"):
+    for name in ("home.png", "advisor.png", "plant-detail.png", "orders.png", "delivery-tracking.jpg", "telegram-chat.jpg"):
         if not (screenshots_dir / name).is_file():
             pytest.skip(f"screenshot {name} not present")
         r = client.get(f"/static/screenshots/{name}")

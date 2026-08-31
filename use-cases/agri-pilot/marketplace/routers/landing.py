@@ -28,6 +28,7 @@ _ALLOWED_SCREENSHOTS = frozenset(
         "plant-detail.png",
         "orders.png",
         "delivery-tracking.jpg",
+        "telegram-chat.jpg",
     }
 )
 
@@ -103,6 +104,8 @@ def _build_landing_html() -> str:
     contact_email = "support@knurdz.org"
     contact_phone = "+94 77 123 4567"
     contact_phone_raw = "+94771234567"
+    repo_url = "https://github.com/knurdz/agent-kernel-agri-pilot"
+    framework_url = "https://github.com/yaalalabs/agent-kernel"
     download_url = "/download"
 
     # AI Advisor Feature items
@@ -164,8 +167,8 @@ def _build_landing_html() -> str:
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AgriPilot — From Crop Diagnosis to Doorstep Delivery</title>
-  <meta name="description" content="AI agronomy advisor, direct farmer marketplace, and live rider delivery on Android, WhatsApp, and Telegram." />
+  <title>AgriPilot: No Middlemen. Farmers Earn More. Fresh Food for Less.</title>
+  <meta name="description" content="Cut out middlemen: farmers earn more, consumers get fresh food at lower cost, and citizens deliver to earn, all powered by multi-agent AI on Android, WhatsApp, and Telegram." />
   <link rel="icon" href="/favicon.ico" type="image/png" />
   <style>
     :root {{
@@ -195,12 +198,17 @@ def _build_landing_html() -> str:
       --max-width: 1200px;
     }}
     *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-    html {{ scroll-behavior: smooth; font-size: 16px; }}
+    html {{
+      scroll-behavior: smooth;
+      font-size: 16px;
+      overflow-x: hidden;
+    }}
     body {{
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background-color: var(--cream);
       color: var(--dark);
       line-height: 1.6;
+      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }}
     a {{ color: inherit; text-decoration: none; transition: color 0.15s ease; }}
@@ -414,6 +422,77 @@ def _build_landing_html() -> str:
       margin-bottom: 2.5rem;
     }}
 
+    /* Hero value proposition (top highlight) */
+    .hero-agent-badge {{
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green-800);
+      background: linear-gradient(135deg, var(--green-50), #E8F5E9);
+      border: 1px solid rgba(22, 101, 52, 0.15);
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-pill);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }}
+    .hero-value-strip {{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 960px;
+      margin: 0 auto 2.25rem;
+    }}
+    .value-pillar {{
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.35rem 1.15rem;
+      box-shadow: var(--shadow-sm);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }}
+    .value-pillar:hover {{
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }}
+    .value-pillar::before {{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--green-600);
+    }}
+    .value-pillar-icon {{
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }}
+    .value-pillar-title {{
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.01em;
+    }}
+    .value-pillar-desc {{
+      font-size: 0.82rem;
+      color: var(--dark-muted);
+      line-height: 1.45;
+    }}
+    @media (max-width: 768px) {{
+      .hero-value-strip {{
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+      }}
+    }}
+
     /* Trust Highlights Ticker */
     .highlights-bar {{
       background: var(--cream-card);
@@ -487,7 +566,7 @@ def _build_landing_html() -> str:
       .phone-mockup.secondary {{
         display: block;
         width: 250px;
-        opacity: 0.9;
+        opacity: 0.95;
         transform: translateY(20px);
       }}
     }}
@@ -532,7 +611,7 @@ def _build_landing_html() -> str:
     /* 3-Column Feature Cards (Hope Rise Style) */
     .cards-grid-3 {{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
     }}
     .card-feature {{
@@ -628,8 +707,8 @@ def _build_landing_html() -> str:
     /* App Screens Gallery Grid */
     .screens-grid {{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.25rem;
       align-items: stretch;
     }}
     @media (min-width: 1024px) {{
@@ -692,14 +771,14 @@ def _build_landing_html() -> str:
     /* Supply Chain Roles (Farmer, Buyer, Rider) */
     .roles-grid {{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 1.75rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
     }}
     .role-card {{
       background: var(--cream-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 2.2rem 2rem;
+      padding: 2.2rem 1.85rem;
       box-shadow: var(--shadow-sm);
       position: relative;
       overflow: hidden;
@@ -757,7 +836,7 @@ def _build_landing_html() -> str:
     /* Channels & Architecture Section */
     .channels-grid {{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1.25rem;
       margin-top: 2rem;
     }}
@@ -790,7 +869,86 @@ def _build_landing_html() -> str:
       color: var(--green-700);
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.25rem;
+    }}
+    .integration-proof {{
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: minmax(220px, 280px) 1fr;
+      gap: 2rem;
+      align-items: center;
+      background: var(--cream-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow-sm);
+    }}
+    .integration-proof-img {{
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      background: #FAFAFA;
+      max-width: 280px;
+      margin: 0 auto;
+    }}
+    .integration-proof-img img {{
+      width: 100%;
+      height: auto;
+      display: block;
+    }}
+    .integration-proof-badge {{
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--green-700);
+      background: var(--green-50);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-pill);
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }}
+    .integration-proof-title {{
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }}
+    .integration-proof-desc {{
+      font-size: 0.92rem;
+      color: var(--dark-muted);
+      line-height: 1.55;
+      margin-bottom: 1rem;
+    }}
+    .integration-proof-list {{
+      list-style: none;
+      margin-bottom: 1.25rem;
+    }}
+    .integration-proof-list li {{
+      font-size: 0.88rem;
+      color: var(--dark-muted);
+      padding: 0.35rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }}
+    .integration-proof-list li::before {{
+      content: "✓";
+      color: var(--green-600);
+      font-weight: 700;
+      flex-shrink: 0;
+    }}
+    @media (max-width: 768px) {{
+      .integration-proof {{
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 1.25rem;
+      }}
+      .integration-proof-list li {{
+        justify-content: center;
+      }}
     }}
     .channel-link:hover {{ text-decoration: underline; }}
 
@@ -859,7 +1017,7 @@ def _build_landing_html() -> str:
     /* Contact Section */
     .contact-grid {{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1.25rem;
     }}
     .contact-card {{
@@ -904,53 +1062,67 @@ def _build_landing_html() -> str:
       color: var(--dark-light);
     }}
 
-    /* Footer */
+    /* Footer - Full Width Clean Horizontal Layout */
     .footer {{
       background: var(--dark);
       color: #E5E7EB;
-      padding: 4rem 0 2rem;
+      padding: 4.5rem 0 2rem;
       font-size: 0.9rem;
     }}
     .footer-top {{
       display: grid;
-      grid-template-columns: 2fr repeat(auto-fit, minmax(160px, 1fr));
-      gap: 2.5rem;
+      grid-template-columns: 2fr 1fr 1fr 1.2fr;
+      gap: 3.5rem;
       padding-bottom: 3rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }}
     .footer-brand h4 {{
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 800;
       color: #FFFFFF;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.75rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.55rem;
     }}
     .footer-brand p {{
       color: #9CA3AF;
       font-size: 0.88rem;
       max-width: 360px;
-      line-height: 1.55;
+      line-height: 1.6;
       margin-bottom: 1.25rem;
     }}
+    .footer-brand-meta {{
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.85rem;
+      color: #9CA3AF;
+    }}
+    .footer-brand-meta a {{
+      color: #34D399;
+    }}
+    .footer-brand-meta a:hover {{
+      text-decoration: underline;
+    }}
     .footer-col h5 {{
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #FFFFFF;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }}
     .footer-links {{
       list-style: none;
-    }}
-    .footer-links li {{
-      margin-bottom: 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
     }}
     .footer-links a {{
       color: #9CA3AF;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
+      transition: color 0.15s ease;
     }}
     .footer-links a:hover {{
       color: #34D399;
@@ -963,23 +1135,43 @@ def _build_landing_html() -> str:
       flex-wrap: wrap;
       gap: 1rem;
       color: #9CA3AF;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
     }}
     .footer-bottom a {{
       color: #34D399;
     }}
+    .footer-bottom a:hover {{
+      text-decoration: underline;
+    }}
 
-    /* Responsive Queries */
-    @media (max-width: 900px) {{
+    /* Fully Responsive Breakpoints */
+    @media (max-width: 1024px) {{
+      .footer-top {{
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 2rem;
+      }}
+    }}
+    @media (max-width: 860px) {{
       .nav-menu {{ display: none; }}
-      .footer-top {{ grid-template-columns: 1fr 1fr; }}
+      .footer-top {{
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+      }}
     }}
     @media (max-width: 600px) {{
       .top-bar-inner {{ justify-content: center; text-align: center; }}
       .top-contacts {{ justify-content: center; }}
       .hero-cta-group {{ flex-direction: column; width: 100%; }}
       .hero-cta-group .btn {{ width: 100%; }}
-      .footer-top {{ grid-template-columns: 1fr; }}
+      .footer-top {{
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }}
+      .footer-bottom {{
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+      }}
     }}
   </style>
 </head>
@@ -996,8 +1188,11 @@ def _build_landing_html() -> str:
           <span>&#9742;</span> {contact_phone}
         </a>
         <span class="top-contact-link">
-          <span>&#128205;</span> Matale, Sri Lanka
+          <span>&#128205;</span> University of Moratuwa
         </span>
+        <a class="top-contact-link" href="{repo_url}" target="_blank" rel="noopener">
+          <span>&#9733;</span> GitHub Repo
+        </a>
       </div>
       <div>
         <span class="top-badge">Android &middot; WhatsApp &middot; Telegram</span>
@@ -1022,9 +1217,13 @@ def _build_landing_html() -> str:
         <li><a class="nav-link" href="#app-screens">Screens</a></li>
         <li><a class="nav-link" href="/architecture">Architecture</a></li>
         <li><a class="nav-link" href="/docs">API Docs</a></li>
+        <li><a class="nav-link" href="{repo_url}" target="_blank" rel="noopener">GitHub</a></li>
         <li><a class="nav-link" href="#contact">Contact</a></li>
       </ul>
       <div class="nav-actions">
+        <a class="btn btn-ghost btn-sm" href="{repo_url}" target="_blank" rel="noopener" style="padding: 0.5rem 0.85rem;">
+          <span>&#128187;</span> GitHub
+        </a>
         <a class="btn btn-primary btn-sm" href="{download_url}">
           <span>&#8595;</span> Download APK
         </a>
@@ -1036,15 +1235,36 @@ def _build_landing_html() -> str:
     <!-- Hero Section -->
     <section class="hero" id="hero">
       <div class="container">
+        <div class="hero-tag-wrap" style="margin-bottom: 0.75rem;">
+          <span class="hero-agent-badge">&#129302; Powered by Multi-Agent AI</span>
+        </div>
         <div class="hero-tag-wrap">
-          <span class="hero-tag">&#127807; AI Agricultural Intelligence &amp; Logistics</span>
+          <span class="hero-tag">&#127807; No Middlemen &middot; Direct Farm-to-Table</span>
         </div>
         <h1 class="hero-title">
-          From Crop Diagnosis to <span class="accent">Doorstep Delivery</span>
+          Farmers Earn More. <span class="accent">Fresh Food</span> at Lower Cost. Citizens Deliver &amp; Earn.
         </h1>
         <p class="hero-subtitle">
-          AgriPilot empowers farmers, buyers, and delivery riders with multi-agent AI disease diagnosis, direct marketplace listings, and live rider GPS tracking — on Android, WhatsApp, and Telegram.
+          AgriPilot removes middlemen from the supply chain, so growers keep their margin, families get farm-fresh produce at fair prices, and local riders earn on every delivery. Multi-agent AI coordinates diagnosis, marketplace matching, and live GPS tracking on Android, WhatsApp, and Telegram.
         </p>
+
+        <div class="hero-value-strip">
+          <article class="value-pillar">
+            <div class="value-pillar-icon">&#127806;</div>
+            <h2 class="value-pillar-title">Farmers Earn More</h2>
+            <p class="value-pillar-desc">Sell harvests direct to buyers: no middlemen, no commission cuts. Keep more of what you grow.</p>
+          </article>
+          <article class="value-pillar">
+            <div class="value-pillar-icon">&#129382;</div>
+            <h2 class="value-pillar-title">Fresh Food, Lower Cost</h2>
+            <p class="value-pillar-desc">Consumers buy straight from the farm: fresher produce at fair prices without trader markups.</p>
+          </article>
+          <article class="value-pillar">
+            <div class="value-pillar-icon">&#128757;</div>
+            <h2 class="value-pillar-title">Citizens Deliver &amp; Earn</h2>
+            <p class="value-pillar-desc">Anyone can sign up as a rider, fulfill local farm-to-doorstep deliveries, and earn flexible income.</p>
+          </article>
+        </div>
         <div class="hero-cta-group">
           <a class="btn btn-primary" href="{download_url}">
             <span>&#128242;</span> Download Android App <span class="badge-pill" style="background: rgba(255,255,255,0.25); color: #fff;">APK</span>
@@ -1055,37 +1275,40 @@ def _build_landing_html() -> str:
           <a class="btn btn-ghost" href="{telegram_base}" target="_blank" rel="noopener">
             <span>&#9992;</span> Telegram Bot (@{telegram_label})
           </a>
+          <a class="btn btn-ghost" href="{repo_url}" target="_blank" rel="noopener">
+            <span>&#128187;</span> GitHub Repo
+          </a>
         </div>
 
         <!-- Trust Highlights Ticker -->
         <div class="highlights-bar">
           <div class="highlights-grid">
             <div class="highlight-item">
-              <div class="highlight-icon">&#128300;</div>
+              <div class="highlight-icon">&#127806;</div>
               <div>
-                <span class="highlight-text">ViT Leaf Diagnosis</span>
-                <span class="highlight-sub">Vision Transformer AI</span>
+                <span class="highlight-text">No Middlemen</span>
+                <span class="highlight-sub">Farmers sell direct, keep full margin</span>
               </div>
             </div>
             <div class="highlight-item">
-              <div class="highlight-icon">&#128722;</div>
+              <div class="highlight-icon">&#129382;</div>
               <div>
-                <span class="highlight-text">Direct Farm Market</span>
-                <span class="highlight-sub">0% platform commission</span>
+                <span class="highlight-text">Lower Prices</span>
+                <span class="highlight-sub">Fresh farm produce without trader markup</span>
               </div>
             </div>
             <div class="highlight-item">
               <div class="highlight-icon">&#128757;</div>
               <div>
-                <span class="highlight-text">Live Rider Delivery</span>
-                <span class="highlight-sub">OpenStreetMap &amp; PIN handoff</span>
+                <span class="highlight-text">Earn as a Rider</span>
+                <span class="highlight-sub">Citizens deliver locally &amp; get paid</span>
               </div>
             </div>
             <div class="highlight-item">
-              <div class="highlight-icon">&#128737;</div>
+              <div class="highlight-icon">&#129302;</div>
               <div>
-                <span class="highlight-text">Safety Validated</span>
-                <span class="highlight-sub">ChromaDB RAG treatment check</span>
+                <span class="highlight-text">Agent-Powered</span>
+                <span class="highlight-sub">AI diagnosis, matching &amp; logistics</span>
               </div>
             </div>
           </div>
@@ -1097,7 +1320,7 @@ def _build_landing_html() -> str:
             <img src="/static/screenshots/home.png" alt="AgriPilot Farmer Home Screen" width="290" height="580" />
           </div>
           <div class="phone-mockup secondary">
-            <img src="/static/screenshots/advisor.png" alt="AgriPilot AI Advisor Diagnosis Screen" width="250" height="500" />
+            <img src="/static/screenshots/plant-detail.png" alt="AgriPilot Plant Health Detail Screen" width="250" height="500" />
           </div>
         </div>
       </div>
@@ -1335,6 +1558,28 @@ def _build_landing_html() -> str:
           </div>
         </div>
 
+        <div class="integration-proof" id="telegram-proof">
+          <div class="integration-proof-img">
+            <img src="/static/screenshots/telegram-chat.jpg" alt="AgriPilot Telegram bot: linked farmer account asking about crop listings" loading="lazy" width="280" height="622" />
+          </div>
+          <div>
+            <span class="integration-proof-badge">Live Integration Proof</span>
+            <h3 class="integration-proof-title">Telegram Bot in Production</h3>
+            <p class="integration-proof-desc">
+              Farmers link their AgriPilot account via contact sharing, then chat with the same AI advisor and marketplace tools used in the Android app; no separate login required.
+            </p>
+            <ul class="integration-proof-list">
+              <li>Phone-number contact share links Telegram chat to farmer profile</li>
+              <li>Persistent session memory across mobile app and Telegram</li>
+              <li>Marketplace queries: crop listings, sold history, and inventory counts</li>
+              <li>Farmer-only gate blocks unlinked or inactive accounts before any LLM call</li>
+            </ul>
+            <a class="btn btn-secondary" href="{telegram_base}" target="_blank" rel="noopener">
+              <span>&#9992;</span> Try @{telegram_label} on Telegram
+            </a>
+          </div>
+        </div>
+
         <div style="text-align: center; margin-top: 2.5rem;">
           <a class="btn btn-secondary" href="/architecture">
             <span>&#128202;</span> View runtime architecture &rarr;
@@ -1375,8 +1620,8 @@ def _build_landing_html() -> str:
             <a class="btn btn-primary" href="{download_url}" style="background: #FFFFFF; color: var(--green-900); font-weight: 700;">
               <span>&#128242;</span> Download Android App (APK)
             </a>
-            <a class="btn btn-ghost" href="https://github.com/yaalalabs/agent-kernel/releases?q=agripilot-mobile" target="_blank" rel="noopener" style="color: #FFFFFF; border-color: rgba(255,255,255,0.3);">
-              View GitHub Releases &rarr;
+            <a class="btn btn-ghost" href="{repo_url}" target="_blank" rel="noopener" style="color: #FFFFFF; border-color: rgba(255,255,255,0.3);">
+              <span>&#128187;</span> GitHub Repository &rarr;
             </a>
           </div>
         </div>
@@ -1419,15 +1664,15 @@ def _build_landing_html() -> str:
           <div class="contact-card">
             <div class="contact-icon">&#128205;</div>
             <h3 class="contact-card-title">Location</h3>
-            <span class="contact-card-val">Matale, Sri Lanka</span>
-            <span class="contact-card-desc">Central Province Operations</span>
+            <span class="contact-card-val">University of Moratuwa</span>
+            <span class="contact-card-desc">Moratuwa, Sri Lanka</span>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
+  <!-- Footer - Desktop Horizontal Grid Layout -->
   <footer class="footer">
     <div class="container">
       <div class="footer-top">
@@ -1439,9 +1684,10 @@ def _build_landing_html() -> str:
           <p>
             An agentic agricultural intelligence, marketplace, and delivery platform empowering local farmers and buyers through multi-agent AI.
           </p>
-          <div style="font-size: 0.85rem; color: #9CA3AF;">
-            <p>Email: <a href="mailto:{contact_email}" style="color: #34D399;">{contact_email}</a></p>
-            <p>Phone: <a href="tel:{contact_phone_raw}" style="color: #34D399;">{contact_phone}</a></p>
+          <div class="footer-brand-meta">
+            <span>Email: <a href="mailto:{contact_email}">{contact_email}</a></span>
+            <span>Hotline: <a href="tel:{contact_phone_raw}">{contact_phone}</a></span>
+            <span>Location: University of Moratuwa</span>
           </div>
         </div>
 
@@ -1461,7 +1707,8 @@ def _build_landing_html() -> str:
           <ul class="footer-links">
             <li><a href="/docs">REST API Documentation</a></li>
             <li><a href="/architecture">Architecture Diagram</a></li>
-            <li><a href="https://github.com/yaalalabs/agent-kernel" target="_blank" rel="noopener">Agent Kernel GitHub</a></li>
+            <li><a href="{repo_url}" target="_blank" rel="noopener">AgriPilot GitHub Repo</a></li>
+            <li><a href="{framework_url}" target="_blank" rel="noopener">Agent Kernel Framework</a></li>
             <li><a href="https://kernel.yaala.ai/docs" target="_blank" rel="noopener">Framework Docs</a></li>
           </ul>
         </div>
@@ -1469,17 +1716,17 @@ def _build_landing_html() -> str:
         <div class="footer-col">
           <h5>Channels &amp; Contact</h5>
           <ul class="footer-links">
-            <li><a href="{wa_me}" target="_blank" rel="noopener">WhatsApp Advisor</a></li>
-            <li><a href="{telegram_base}" target="_blank" rel="noopener">Telegram Bot</a></li>
-            <li><a href="mailto:{contact_email}">Email Support</a></li>
-            <li><a href="tel:{contact_phone_raw}">Hotline: {contact_phone}</a></li>
+            <li><a href="{wa_me}" target="_blank" rel="noopener">WhatsApp ({wa_display})</a></li>
+            <li><a href="{telegram_base}" target="_blank" rel="noopener">Telegram (@{telegram_label})</a></li>
+            <li><a href="mailto:{contact_email}">{contact_email}</a></li>
+            <li><a href="tel:{contact_phone_raw}">{contact_phone}</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
         <div>
-          &copy; 2026 AgriPilot &middot; Built with <a href="https://github.com/yaalalabs/agent-kernel" target="_blank" rel="noopener">Agent Kernel</a> &middot; <a href="https://knurdz.org" target="_blank" rel="noopener">knurdz.org</a>
+          &copy; 2026 AgriPilot &middot; <a href="{repo_url}" target="_blank" rel="noopener">GitHub Repository</a> &middot; Built with <a href="{framework_url}" target="_blank" rel="noopener">Agent Kernel</a> &middot; <a href="https://knurdz.org" target="_blank" rel="noopener">knurdz.org</a>
         </div>
         <div>
           <a href="#hero">Back to top &uarr;</a>

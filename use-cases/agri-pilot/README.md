@@ -7,6 +7,10 @@
 <h2 align="center"><a href="../../README.md">AgriPilot</a></h2>
 
 <p align="center">
+  <strong>No middlemen: farmers earn more, fresh food at lower cost, citizens deliver &amp; earn. Agent-powered.</strong>
+</p>
+
+<p align="center">
   Project documentation lives in the <a href="../../README.md"><strong>repository root README</strong></a>.
 </p>
 
@@ -24,6 +28,7 @@
   <img src="docs/screenshots/home.png" alt="AgriPilot home" width="180" />
   <img src="docs/screenshots/advisor.png" alt="AgriPilot advisor" width="180" />
   <img src="docs/screenshots/delivery-tracking.jpg" alt="AgriPilot delivery tracking" width="180" />
+  <img src="docs/screenshots/telegram-chat.jpg" alt="AgriPilot Telegram bot: linked farmer asking about crop listings" width="180" />
 </p>
 
 <p align="center">

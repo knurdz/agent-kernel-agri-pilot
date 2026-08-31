@@ -5,11 +5,11 @@
 <h1 align="center">AgriPilot</h1>
 
 <p align="center">
-  <strong>From crop diagnosis to doorstep delivery — an agentic platform for farmers, buyers, and riders</strong>
+  <strong>No middlemen: farmers earn more, families get fresh food at lower cost, and citizens deliver to earn</strong>
 </p>
 
 <p align="center">
-  AI advisory · Farmer marketplace · Live order tracking · Android, WhatsApp &amp; Telegram
+  Agent-powered · Direct farm marketplace · Live delivery tracking · Android, WhatsApp &amp; Telegram
 </p>
 
 <p align="center">
@@ -40,7 +40,7 @@
 
 ---
 
-AgriPilot helps farmers diagnose crop problems, manage sell listings and plant health, connect with buyers, and coordinate rider delivery — with an AI advisor on **Android**, **WhatsApp**, and **Telegram**. The backend is a [Agent Kernel](https://github.com/yaalalabs/agent-kernel) use-case using **LangGraph** multi-agent routing, a **Postgres** marketplace, and **Redis**-backed durable sessions.
+AgriPilot cuts out middlemen from farm-to-table: **farmers** sell direct and keep more margin, **consumers** get fresher produce at lower prices, and **citizens** can deliver locally and earn, all coordinated by multi-agent AI. Crop diagnosis, marketplace listings, plant health, and live rider tracking run on **Android**, **WhatsApp**, and **Telegram**. The backend is an [Agent Kernel](https://github.com/yaalalabs/agent-kernel) use-case using **LangGraph** multi-agent routing, a **Postgres** marketplace, and **Redis**-backed durable sessions.
 
 [`AGENTS.md`](use-cases/agri-pilot/AGENTS.md) covers conventions for coding agents working in `use-cases/agri-pilot/`.
 
@@ -52,7 +52,7 @@ Release APKs are published as **draft** [GitHub Releases](https://github.com/knu
 |------|--------|
 | 1 | Download the latest `agripilot-*.apk` from [Releases](https://github.com/knurdz/agent-kernel-agri-pilot/releases?q=agripilot-mobile) |
 | 2 | On your phone, allow install from your browser or files app |
-| 3 | Open the APK — the app talks to the production API baked in at build time |
+| 3 | Open the APK. The app talks to the production API baked in at build time |
 
 **Maintainers:** deploy the backend on a VPS (below), then run **Actions → AgriPilot Mobile Release**:
 
@@ -63,7 +63,7 @@ Release APKs are published as **draft** [GitHub Releases](https://github.com/knu
 
 The workflow runs tests, builds the APK, generates grouped release notes from mobile commits, and opens a **draft** release tagged `agripilot-mobile-v<version>`. Edit the notes on GitHub, then publish when ready.
 
-> Mobile release tags use the `agripilot-mobile-v*` prefix — separate from Agent Kernel PyPI publish tags (`v*`).
+> Mobile release tags use the `agripilot-mobile-v*` prefix, separate from Agent Kernel PyPI publish tags (`v*`).
 
 ---
 
@@ -75,36 +75,36 @@ The workflow runs tests, builds the APK, generates grouped release notes from mo
 |------------|---------|
 | **Crop diagnosis** | Photo-based disease detection (HuggingFace ViT) with quality checks and confidence threshold |
 | **Treatment advice** | Agricultural RAG over ChromaDB (`data/chroma_db/`) with chemical/dosage safety validation |
-| **Weather & irrigation** | Open-Meteo forecasts — no API key required |
+| **Weather & irrigation** | Open-Meteo forecasts: no API key required |
 | **Conversation memory** | Redis-backed sessions, case history, follow-up resolution (“it’s getting worse”) |
 | **Thread history** | Mobile chat threads via Agent Kernel thread routes |
 | **Safety backstops** | Supervisor handoff-loop guard + knowledge-agent treatment validation |
 
-The agent **explains** marketplace and delivery status but **never** creates orders, assigns riders, or mutates order state — those actions are REST-only in the mobile app.
+The agent **explains** marketplace and delivery status but **never** creates orders, assigns riders, or mutates order state. Those actions are REST-only in the mobile app.
 
 ### Farmer
 
-- **Sell listings** — crop, quantity, price, category, description, harvest date, product photo, analytics (views, connections, revenue)
-- **Plant tracking** — tracked plants with photo timeline and derived insights
-- **Quick crop scan** — one-time ViT analysis without creating a plant
-- **Import plant to listing** — link tracked crop health to a sell listing for buyers
-- **Orders** — confirm quantity, mark ready, live tracking map
-- **Channels** — link WhatsApp or Telegram for advisor chat outside the app
+- **Sell listings**: crop, quantity, price, category, description, harvest date, product photo, analytics (views, connections, revenue)
+- **Plant tracking**: tracked plants with photo timeline and derived insights
+- **Quick crop scan**: one-time ViT analysis without creating a plant
+- **Import plant to listing**: link tracked crop health to a sell listing for buyers
+- **Orders**: confirm quantity, mark ready, live tracking map
+- **Channels**: link WhatsApp or Telegram for advisor chat outside the app
 
 ### Buyer
 
-- **Browse & match** — filter listings by crop, district, category, quantity, price; ranked match API
-- **Crop-health insights** — observation counts and diagnosis timeline on listings linked to tracked plants (no raw photos or chemical advice)
-- **Connections** — express interest; phone numbers revealed only after acceptance
-- **Checkout** — pickup or rider delivery; live order tracking with map, ETA, and rider GPS
+- **Browse & match**: filter listings by crop, district, category, quantity, price; ranked match API
+- **Crop-health insights**: observation counts and diagnosis timeline on listings linked to tracked plants (no raw photos or chemical advice)
+- **Connections**: express interest; phone numbers revealed only after acceptance
+- **Checkout**: pickup or rider delivery; live order tracking with map, ETA, and rider GPS
 
 ### Rider
 
 - **Self-register** with vehicle confirmation
 - **Go online** + share GPS to see nearby delivery jobs (weight + distance)
 - **Accept jobs** in the app; one active delivery at a time
-- **Live tracking** — post GPS every few seconds; OSM map tiles (no Google Maps API key)
-- **PIN handoff** — enter buyer PIN on the Deliveries tab at drop-off
+- **Live tracking**: post GPS every few seconds; OSM map tiles (no Google Maps API key)
+- **PIN handoff**: enter buyer PIN on the Deliveries tab at drop-off
 
 Payment is **cash/off-platform**. Maps use **OpenStreetMap** in the app and optional **OSRM** road routing on the server.
 
@@ -113,7 +113,7 @@ Payment is **cash/off-platform**. Maps use **OpenStreetMap** in the app and opti
 ## App screenshots
 
 <p align="center">
-  <img src="use-cases/agri-pilot/docs/screenshots/home.png" alt="AgriPilot farmer home — plants, listings, and Ask AgriPilot" width="220" />
+  <img src="use-cases/agri-pilot/docs/screenshots/home.png" alt="AgriPilot farmer home: plants, listings, and Ask AgriPilot" width="220" />
   &nbsp;
   <img src="use-cases/agri-pilot/docs/screenshots/advisor.png" alt="AI advisor chat with crop diagnosis advice" width="220" />
   &nbsp;
@@ -124,13 +124,18 @@ Payment is **cash/off-platform**. Maps use **OpenStreetMap** in the app and opti
   <img src="use-cases/agri-pilot/docs/screenshots/delivery-tracking.jpg" alt="Live rider delivery tracking on map" width="220" />
 </p>
 
+<p align="center">
+  <img src="use-cases/agri-pilot/docs/screenshots/telegram-chat.jpg" alt="Telegram bot integration: linked farmer account querying crop listings" width="220" />
+</p>
+
 | Screen | What it shows |
 |--------|----------------|
-| **Home** | Farmer dashboard — tracked plants, sell listings, and one-tap AI advisor |
+| **Home** | Farmer dashboard: tracked plants, sell listings, and one-tap AI advisor |
 | **Advisor** | Chat with photo diagnosis and safety-validated treatment steps |
 | **Plant detail** | Per-crop photo timeline, growth stage, and diagnosis history |
 | **Orders** | Confirm quantity, dispatch riders, and track fulfillment status |
 | **Delivery** | Live OSM map, route ETA, progress steps, and PIN handoff |
+| **Telegram** | Production bot: contact-share account linking, then marketplace and crop queries in chat |
 
 The production site at [agripilot.knurdz.org](https://agripilot.knurdz.org) uses these same screenshots on the landing page.
 
@@ -154,11 +159,11 @@ The production site at [agripilot.knurdz.org](https://agripilot.knurdz.org) uses
 
 **Runtime flow**
 
-1. **Clients** — Flutter Android (JWT), WhatsApp Cloud API, Telegram Bot API
-2. **Edge** — Caddy terminates HTTPS (Let’s Encrypt) on the VPS; only ports 80/443 are public
-3. **App** — Agent Kernel `RESTAPI` serves marketplace REST, authenticated mobile chat, and channel webhooks
-4. **Agents** — LangGraph supervisor routes to `vision`, `knowledge`, `resource`, and `delivery` specialists
-5. **Data** — PostgreSQL (marketplace/orders), Redis (sessions, attachments, threads), ChromaDB (RAG), on-disk plant/listing media
+1. **Clients**: Flutter Android (JWT), WhatsApp Cloud API, Telegram Bot API
+2. **Edge**: Caddy terminates HTTPS (Let’s Encrypt) on the VPS; only ports 80/443 are public
+3. **App**: Agent Kernel `RESTAPI` serves marketplace REST, authenticated mobile chat, and channel webhooks
+4. **Agents**: LangGraph supervisor routes to `vision`, `knowledge`, `resource`, and `delivery` specialists
+5. **Data**: PostgreSQL (marketplace/orders), Redis (sessions, attachments, threads), ChromaDB (RAG), on-disk plant/listing media
 
 Supervisor routing lives in [`use-cases/agri-pilot/agents/supervisor.py`](use-cases/agri-pilot/agents/supervisor.py). Marketplace order/dispatch logic is deterministic REST in `use-cases/agri-pilot/marketplace/order_service.py`, `dispatch_service.py`, and `tracking_service.py`.
 
@@ -166,7 +171,7 @@ Supervisor routing lives in [`use-cases/agri-pilot/agents/supervisor.py`](use-ca
 
 ## How Agent Kernel is used
 
-AgriPilot is an end-to-end use-case built **on top of** Agent Kernel — not a fork of the framework.
+AgriPilot is an end-to-end use-case built **on top of** Agent Kernel, not a fork of the framework.
 
 ### Package and extras
 
@@ -174,14 +179,14 @@ AgriPilot is an end-to-end use-case built **on top of** Agent Kernel — not a f
 agentkernel[cli,langgraph,multimodal,chromadb,openai,api,whatsapp,telegram,redis,thread]>=0.8.1
 ```
 
-Defined in [`pyproject.toml`](use-cases/agri-pilot/pyproject.toml). Production Docker reinstalls monorepo `ak-py` because PyPI `0.8.1` predates `auth.authoriser` and mobile thread routes — see [`deploy/Dockerfile`](use-cases/agri-pilot/deploy/Dockerfile).
+Defined in [`pyproject.toml`](use-cases/agri-pilot/pyproject.toml). Production Docker reinstalls monorepo `ak-py` because PyPI `0.8.1` predates `auth.authoriser` and mobile thread routes: see [`deploy/Dockerfile`](use-cases/agri-pilot/deploy/Dockerfile).
 
 ### Entry points
 
 | File | Role |
 |------|------|
-| [`demo.py`](use-cases/agri-pilot/demo.py) | CLI — `LangGraphModule([triage_agent])` for local testing |
-| [`app.py`](use-cases/agri-pilot/app.py) | Production — REST + WhatsApp + Telegram + marketplace routers |
+| [`demo.py`](use-cases/agri-pilot/demo.py) | CLI: `LangGraphModule([triage_agent])` for local testing |
+| [`app.py`](use-cases/agri-pilot/app.py) | Production: REST + WhatsApp + Telegram + marketplace routers |
 
 `app.py` wiring:
 
@@ -201,13 +206,13 @@ RESTAPI.run([
 
 ### Multi-agent graph
 
-- **Supervisor** (`use-cases/agri-pilot/agents/supervisor.py`) — `langgraph_supervisor` triage with 20+ tools (marketplace, delivery, plan, profile)
-- **Vision** — ViT crop diagnosis from multimodal attachments
-- **Knowledge** — ChromaDB RAG + `validate_treatment` safety gate
-- **Resource** — Open-Meteo weather, irrigation, spray timing
-- **Delivery** — read-only order/dispatch explanations
+- **Supervisor** (`use-cases/agri-pilot/agents/supervisor.py`): `langgraph_supervisor` triage with 20+ tools (marketplace, delivery, plan, profile)
+- **Vision**: ViT crop diagnosis from multimodal attachments
+- **Knowledge**: ChromaDB RAG + `validate_treatment` safety gate
+- **Resource**: Open-Meteo weather, irrigation, spray timing
+- **Delivery**: read-only order/dispatch explanations
 
-Tools are wrapped with `@guarded` (`use-cases/agri-pilot/tools/tool_guard.py`) — per-session call limits and timeouts.
+Tools are wrapped with `@guarded` (`use-cases/agri-pilot/tools/tool_guard.py`): per-session call limits and timeouts.
 
 ### Sessions and identity
 
@@ -263,7 +268,7 @@ python demo.py
 OPENAI_API_KEY=sk-dummy uv run pytest -m "not slow"
 ```
 
-Run from `use-cases/agri-pilot/` — repo-root pytest collects the whole monorepo.
+Run from `use-cases/agri-pilot/`: repo-root pytest collects the whole monorepo.
 
 ### Android app (dev)
 
@@ -375,7 +380,7 @@ After deploy, the script registers Telegram (`https://<DOMAIN>/telegram/webhook`
 
 ## Configuration
 
-`demo.py` calls `load_dotenv(".env.local")` **before** importing `agentkernel` — keep that order in new entrypoints. `AK_` env vars override `config.yaml` with `__` nesting.
+`demo.py` calls `load_dotenv(".env.local")` **before** importing `agentkernel`. Keep that order in new entrypoints. `AK_` env vars override `config.yaml` with `__` nesting.
 
 Key knobs (see [`.env.local.example`](use-cases/agri-pilot/.env.local.example)):
 
@@ -481,7 +486,7 @@ Errors: `401` invalid JWT, `403` role/subscription, `404` not found, `409` dupli
 
 ### Chat marketplace tools
 
-Bound to the supervisor via `use-cases/agri-pilot/tools/marketplace_tools.py` and `use-cases/agri-pilot/tools/delivery_tools.py` — all `@guarded`. Examples:
+Bound to the supervisor via `use-cases/agri-pilot/tools/marketplace_tools.py` and `use-cases/agri-pilot/tools/delivery_tools.py`: all `@guarded`. Examples:
 
 - Farmer: “I have 500kg tomatoes at 120/kg” → `create_listing_tool`
 - Buyer: “Find 200kg tomato near Kandy” → `match_listings_tool`
@@ -491,7 +496,7 @@ Orders are placed and riders accept jobs **only in the mobile app**, not via cha
 
 ### Conversation continuity
 
-Under Docker the same `session_id` survives restarts — sessions, attachments, and case history live in Redis:
+Under Docker the same `session_id` survives restarts; sessions, attachments, and case history live in Redis:
 
 ```bash
 curl -s $BASE/api/v1/chat -H 'Content-Type: application/json' \
@@ -522,12 +527,12 @@ curl -s $BASE/api/v1/chat -H 'Content-Type: application/json' \
 
 ## Weather & knowledge
 
-- Weather: [Open-Meteo](https://open-meteo.com) — no API key
+- Weather: [Open-Meteo](https://open-meteo.com): no API key
 - After editing `data/knowledge_docs/`: `uv run python scripts/ingest_knowledge.py`
 
 ## Database
 
-Postgres-only runtime; schema via Alembic (`migrations/`). `app.py` runs migrations at startup. Tests use in-memory SQLite fixtures — no Docker required for pytest.
+Postgres-only runtime; schema via Alembic (`migrations/`). `app.py` runs migrations at startup. Tests use in-memory SQLite fixtures; no Docker required for pytest.
 
 ---
 
