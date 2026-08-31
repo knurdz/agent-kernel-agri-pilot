@@ -33,12 +33,14 @@ def test_landing_page_returns_html():
     assert 'href="/download"' in body
     assert 'href="/architecture"' in body
     assert 'href="/docs"' in body
-    assert "From crop diagnosis to doorstep delivery" in body
-    assert "Plant tracking" in body
-    assert "Live delivery" in body
-    assert "Farmer" in body
-    assert "Buyer" in body
-    assert "Rider" in body
+    assert "From Crop Diagnosis to" in body or "From crop diagnosis to doorstep delivery" in body
+    assert "Plant Health" in body or "Plant tracking" in body
+    assert "Live Tracking" in body or "Live delivery" in body
+    assert "Farmers" in body
+    assert "Buyers" in body
+    assert "Delivery Riders" in body
+    assert "support@knurdz.org" in body
+    assert "+94 77 123 4567" in body
 
 
 def test_architecture_page_returns_html():
