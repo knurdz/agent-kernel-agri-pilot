@@ -85,13 +85,40 @@ def valid_coordinate(lat: Optional[float], lon: Optional[float]) -> bool:
 
 # Approximate district centroids for Sri Lanka (no live geocoding in production).
 _DISTRICT_CENTROIDS: dict[str, tuple[float, float]] = {
+    # Western
+    "colombo": (6.9271, 79.8612),
+    "gampaha": (7.0917, 79.9990),
+    "kalutara": (6.5833, 80.1667),
+    # Central
     "kandy": (7.2906, 80.6337),
     "matale": (7.4675, 80.6234),
     "nuwara eliya": (6.9497, 80.7891),
+    # Southern
     "galle": (6.0535, 80.2210),
     "matara": (5.9549, 80.5550),
-    "colombo": (6.9271, 79.8612),
-    "gampaha": (7.0917, 79.9990),
+    "hambantota": (6.1244, 81.1185),
+    # Northern
+    "jaffna": (9.6615, 80.0255),
+    "kilinochchi": (9.3803, 80.4031),
+    "mannar": (8.9816, 79.9044),
+    "mullaitivu": (9.2671, 80.8142),
+    "vavuniya": (8.7514, 80.4971),
+    # Eastern
+    "ampara": (7.2976, 81.6724),
+    "batticaloa": (7.7102, 81.6924),
+    "trincomalee": (8.5874, 81.2152),
+    # North Western
+    "kurunegala": (7.4863, 80.3647),
+    "puttalam": (8.0392, 79.8390),
+    # North Central
+    "anuradhapura": (8.3114, 80.4037),
+    "polonnaruwa": (7.9403, 81.0188),
+    # Uva
+    "badulla": (6.9934, 81.0550),
+    "monaragala": (6.8728, 81.3507),
+    # Sabaragamuwa
+    "ratnapura": (6.6828, 80.3992),
+    "kegalle": (7.2513, 80.3464),
 }
 
 

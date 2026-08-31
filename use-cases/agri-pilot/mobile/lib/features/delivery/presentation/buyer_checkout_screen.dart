@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../core/network/dio_client.dart';
 import '../../../core/storage/handoff_pin_store.dart';
 import '../../../core/widgets/map_widgets.dart';
 import '../../../core/widgets/status_chip.dart';
@@ -81,7 +82,9 @@ class _BuyerCheckoutScreenState extends ConsumerState<BuyerCheckoutScreen> {
           ? 'We are finding a rider for your delivery.'
           : result.order.fulfillmentMode == 'pickup'
               ? 'The farmer will confirm your pickup order.'
-              : orderStatusLabel(result.order.status);
+              : result.order.status == 'pending_farmer_confirmation'
+                  ? 'The farmer will confirm your delivery and set the pickup location.'
+                  : orderStatusLabel(result.order.status);
       await showDialog<void>(
         context: context,
         builder: (dialogContext) => AlertDialog(
@@ -101,7 +104,9 @@ class _BuyerCheckoutScreenState extends ConsumerState<BuyerCheckoutScreen> {
       Navigator.pop(context, true);
       context.push('/orders');
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(apiErrorMessage(e))));
+      }
     } finally {
       if (mounted) setState(() => _loading = false);
     }

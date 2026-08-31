@@ -277,8 +277,6 @@ def create_order(
             raise ValueError("delivery coordinates required for delivery mode")
         if not delivery_address_label:
             raise ValueError("delivery address required")
-        if not valid_coordinate(pickup_lat, pickup_lon):
-            raise ValueError("farmer pickup location missing — set farm district or pin")
 
     _reserve_quantity(db, listing, quantity_kg)
     _mark_listing_sold_if_depleted(listing)
@@ -307,7 +305,12 @@ def create_order(
     _record_event(db, order, "created", actor=buyer, detail=f"mode={fulfillment_mode}")
     if fulfillment_mode == FulfillmentMode.delivery.value:
         _persist_farmer_pickup_profile(db, fp, pickup_lat, pickup_lon, pickup_label)
-        _dispatch_delivery_order(db, order, actor=buyer, require_coords=True)
+        _dispatch_delivery_order(
+            db,
+            order,
+            actor=buyer,
+            require_coords=valid_coordinate(pickup_lat, pickup_lon),
+        )
     db.commit()
     db.refresh(order)
     return order, pin_plain
