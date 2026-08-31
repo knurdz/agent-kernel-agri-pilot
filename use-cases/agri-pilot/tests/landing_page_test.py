@@ -31,10 +31,52 @@ def test_landing_page_returns_html():
     assert "AgriPilot" in body
     assert "Download Android App" in body
     assert 'href="/download"' in body
+    assert 'href="/architecture"' in body
     assert 'href="/docs"' in body
-    assert "AI Agricultural Intelligence" in body
-    assert "Features" in body
-    assert "Farmers" in body
+    assert "From crop diagnosis to doorstep delivery" in body
+    assert "Plant tracking" in body
+    assert "Live delivery" in body
+    assert "Farmer" in body
+    assert "Buyer" in body
+    assert "Rider" in body
+
+
+def test_architecture_page_returns_html():
+    html_path = Path(__file__).resolve().parents[1] / "docs" / "architecture" / "agripilot.architecture.html"
+    if not html_path.is_file():
+        pytest.skip("architecture HTML not present")
+    client = _client()
+    r = client.get("/architecture")
+    assert r.status_code == 200
+    assert "text/html" in r.headers.get("content-type", "")
+    assert "AgriPilot Runtime" in r.text
+
+
+def test_landing_page_links_architecture():
+    html_path = Path(__file__).resolve().parents[1] / "docs" / "architecture" / "agripilot.architecture.html"
+    if not html_path.is_file():
+        pytest.skip("architecture HTML not present")
+    client = _client()
+    r = client.get("/")
+    assert r.status_code == 200
+    assert 'href="/architecture"' in r.text
+    assert "View runtime architecture" in r.text
+
+
+def test_screenshot_assets():
+    client = _client()
+    screenshots_dir = Path(__file__).resolve().parents[1] / "docs" / "screenshots"
+    for name in ("home.png", "advisor.png", "plant-detail.png", "orders.png", "delivery-tracking.jpg"):
+        if not (screenshots_dir / name).is_file():
+            pytest.skip(f"screenshot {name} not present")
+        r = client.get(f"/static/screenshots/{name}")
+        assert r.status_code == 200
+        assert len(r.content) > 0
+
+
+def test_unknown_screenshot_404():
+    client = _client()
+    assert client.get("/static/screenshots/not-real.png").status_code == 404
 
 
 def test_download_redirects_to_default_github_releases(monkeypatch):

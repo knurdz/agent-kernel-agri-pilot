@@ -29,7 +29,7 @@
   &nbsp;·&nbsp;
   <a href="#production-vps-deployment">VPS deploy</a>
   &nbsp;·&nbsp;
-  <a href="#architecture">Architecture</a>
+  <a href="https://agripilot.knurdz.org/architecture">Architecture</a>
   &nbsp;·&nbsp;
   <a href="use-cases/agri-pilot/mobile/README.md">Mobile dev</a>
 </p>
@@ -110,6 +110,32 @@ Payment is **cash/off-platform**. Maps use **OpenStreetMap** in the app and opti
 
 ---
 
+## App screenshots
+
+<p align="center">
+  <img src="use-cases/agri-pilot/docs/screenshots/home.png" alt="AgriPilot farmer home — plants, listings, and Ask AgriPilot" width="220" />
+  &nbsp;
+  <img src="use-cases/agri-pilot/docs/screenshots/advisor.png" alt="AI advisor chat with crop diagnosis advice" width="220" />
+  &nbsp;
+  <img src="use-cases/agri-pilot/docs/screenshots/plant-detail.png" alt="Plant tracking with photo timeline" width="220" />
+  &nbsp;
+  <img src="use-cases/agri-pilot/docs/screenshots/orders.png" alt="Farmer order management and dispatch" width="220" />
+  &nbsp;
+  <img src="use-cases/agri-pilot/docs/screenshots/delivery-tracking.jpg" alt="Live rider delivery tracking on map" width="220" />
+</p>
+
+| Screen | What it shows |
+|--------|----------------|
+| **Home** | Farmer dashboard — tracked plants, sell listings, and one-tap AI advisor |
+| **Advisor** | Chat with photo diagnosis and safety-validated treatment steps |
+| **Plant detail** | Per-crop photo timeline, growth stage, and diagnosis history |
+| **Orders** | Confirm quantity, dispatch riders, and track fulfillment status |
+| **Delivery** | Live OSM map, route ETA, progress steps, and PIN handoff |
+
+The production site at [agripilot.knurdz.org](https://agripilot.knurdz.org) uses these same screenshots on the landing page.
+
+---
+
 ## Architecture
 
 <p align="center">
@@ -121,7 +147,7 @@ Payment is **cash/off-platform**. Maps use **OpenStreetMap** in the app and opti
 <p align="center">
   <em>Click the diagram for full size.</em>
   &nbsp;·&nbsp;
-  <a href="https://knurdz.github.io/agent-kernel-agri-pilot/agripilot.architecture.html" target="_blank" rel="noopener">Interactive diagram ↗</a> (GitHub Pages — requires [Pages enabled](https://github.com/knurdz/agent-kernel-agri-pilot/settings/pages) with **GitHub Actions** source)
+  <a href="https://agripilot.knurdz.org/architecture" target="_blank" rel="noopener">Interactive diagram ↗</a>
   &nbsp;·&nbsp;
   Archify source: <code>use-cases/agri-pilot/docs/architecture/agripilot.architecture.json</code>
 </p>
