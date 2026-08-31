@@ -7,6 +7,7 @@ import os
 from fastapi import APIRouter
 
 from marketplace.channels import public_channel_config
+from marketplace.routers.landing import resolve_app_download_url
 from marketplace.schemas import PublicConfigResponse
 
 router = APIRouter(prefix="/api/config", tags=["config"])
@@ -25,4 +26,8 @@ def get_public_config():
             signup = str((data.get("marketplace") or {}).get("signup_url") or "")
         except Exception:
             signup = ""
-    return PublicConfigResponse(signup_url=signup or None, **cfg)
+    return PublicConfigResponse(
+        signup_url=signup or None,
+        app_download_url=resolve_app_download_url(),
+        **cfg,
+    )

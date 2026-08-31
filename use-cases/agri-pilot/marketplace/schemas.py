@@ -324,6 +324,7 @@ class PublicConfigResponse(BaseModel):
     telegram_bot_username: Optional[str] = None
     telegram_deep_link_base: Optional[str] = None
     signup_url: Optional[str] = None
+    app_download_url: Optional[str] = None
 
 
 class DeviceRegisterRequest(BaseModel):

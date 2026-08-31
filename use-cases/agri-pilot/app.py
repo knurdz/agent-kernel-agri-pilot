@@ -18,6 +18,7 @@ from marketplace.routers.buyer import router as buyer_router
 from marketplace.routers.config import router as config_router
 from marketplace.routers.devices import router as devices_router
 from marketplace.routers.farmer import router as farmer_router
+from marketplace.routers.landing import router as landing_router
 from marketplace.routers.plants import router as plants_router
 from marketplace.routers.orders_buyer import router as orders_buyer_router
 from marketplace.routers.orders_farmer import router as orders_farmer_router
@@ -31,6 +32,7 @@ run_migrations()
 
 LangGraphModule([triage_agent])
 
+RESTAPI.add(landing_router)
 RESTAPI.add(auth_router)
 RESTAPI.add(farmer_router)
 RESTAPI.add(plants_router)

@@ -48,6 +48,11 @@ marketplace:
   jwt_expiry_hours: 24
   signup_url: "http://localhost:8000/docs"
 
+# Public landing page / Android APK download (override via AGRIPILOT_* env vars).
+app:
+  download_url: "https://github.com/yaalalabs/agent-kernel/releases?q=agripilot-mobile"
+  # apk_path: "/path/to/agripilot.apk"  # optional local APK for GET /download/apk
+
 api:
   custom_router_prefix: ""
 
