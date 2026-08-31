@@ -13,7 +13,7 @@
 <p align="center">
   <a href="../../README.md"><strong>Project README</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/yaalalabs/agent-kernel/releases?q=agripilot-mobile">Download APK</a>
+  <a href="https://github.com/knurdz/agent-kernel-agri-pilot/releases?q=agripilot-mobile">Download APK</a>
   &nbsp;·&nbsp;
   <a href="#setup">Setup</a>
   &nbsp;·&nbsp;
@@ -94,7 +94,7 @@ Production uses HTTPS via Caddy on your VPS domain. **Do not** ship release APKs
 1. Deploy the backend (see [`README.md`](../../README.md#production-vps-deployment))
 2. Run **Actions → AgriPilot Mobile Release** with a `version` (e.g. `1.0.1`) and optional `api_base_url`
 3. Edit the draft release notes on GitHub, then publish
-4. Download the APK from [GitHub Releases](https://github.com/yaalalabs/agent-kernel/releases?q=agripilot-mobile)
+4. Download the APK from [GitHub Releases](https://github.com/knurdz/agent-kernel-agri-pilot/releases?q=agripilot-mobile)
 
 ### Local release build
 

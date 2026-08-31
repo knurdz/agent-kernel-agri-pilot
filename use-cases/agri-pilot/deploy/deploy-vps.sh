@@ -586,7 +586,7 @@ Commands:
   validate  Validate merged Compose config
 
 Bootstrap env vars (fresh VPS):
-  REPO_URL=https://github.com/your-org/agent-kernel.git
+  REPO_URL=https://github.com/knurdz/agent-kernel-agri-pilot.git
   BRANCH=main
   INSTALL_DIR=/opt/agent-kernel
 

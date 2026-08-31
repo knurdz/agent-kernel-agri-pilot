@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/yaalalabs/agent-kernel/releases?q=agripilot-mobile"><img src="https://img.shields.io/badge/Android-APK-3DDC84?logo=android&logoColor=white" alt="Android APK" /></a>
+  <a href="https://github.com/knurdz/agent-kernel-agri-pilot/releases?q=agripilot-mobile"><img src="https://img.shields.io/badge/Android-APK-3DDC84?logo=android&logoColor=white" alt="Android APK" /></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.12+-3776AB?logo=python&logoColor=white" alt="Python 3.12+" /></a>
   <a href="https://github.com/yaalalabs/agent-kernel"><img src="https://img.shields.io/badge/Built%20with-Agent%20Kernel-0066FF" alt="Agent Kernel" /></a>
   <a href="https://langchain-ai.github.io/langgraph/"><img src="https://img.shields.io/badge/Orchestration-LangGraph-1C3C3C" alt="LangGraph" /></a>
@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/yaalalabs/agent-kernel/releases?q=agripilot-mobile"><strong>Download Android APK</strong></a>
+  <a href="https://github.com/knurdz/agent-kernel-agri-pilot/releases?q=agripilot-mobile"><strong>Download Android APK</strong></a>
   &nbsp;·&nbsp;
   <a href="#quick-start">Quick start</a>
   &nbsp;·&nbsp;
@@ -46,11 +46,11 @@ AgriPilot helps farmers diagnose crop problems, manage sell listings and plant h
 
 ## Download the Android app
 
-Release APKs are published as **draft** [GitHub Releases](https://github.com/yaalalabs/agent-kernel/releases?q=agripilot-mobile) by [`agripilot-mobile-release`](.github/workflows/agripilot-mobile-release.yaml).
+Release APKs are published as **draft** [GitHub Releases](https://github.com/knurdz/agent-kernel-agri-pilot/releases?q=agripilot-mobile) by [`agripilot-mobile-release`](.github/workflows/agripilot-mobile-release.yaml).
 
 | Step | Action |
 |------|--------|
-| 1 | Download the latest `agripilot-*.apk` from [Releases](https://github.com/yaalalabs/agent-kernel/releases?q=agripilot-mobile) |
+| 1 | Download the latest `agripilot-*.apk` from [Releases](https://github.com/knurdz/agent-kernel-agri-pilot/releases?q=agripilot-mobile) |
 | 2 | On your phone, allow install from your browser or files app |
 | 3 | Open the APK — the app talks to the production API baked in at build time |
 
