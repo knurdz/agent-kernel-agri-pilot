@@ -4,6 +4,10 @@ Runs the agent behind an Agent Kernel REST server with WhatsApp Cloud API and
 Telegram Bot API webhook support. Mobile chat uses JWT-authenticated thread routes.
 """
 
+import asyncio
+import logging
+import os
+
 from dotenv import load_dotenv
 
 load_dotenv(".env.local")
@@ -12,6 +16,7 @@ from agentkernel.api import RESTAPI
 from agentkernel.langgraph import LangGraphModule
 
 from agents.supervisor import triage_agent
+from channel_handlers.bot_commands import register_telegram_commands
 from marketplace.database import run_migrations
 from marketplace.routers.auth import router as auth_router
 from marketplace.routers.buyer import router as buyer_router
@@ -44,5 +49,22 @@ RESTAPI.add(config_router)
 RESTAPI.add(devices_router)
 
 
+def _register_telegram_bot_commands() -> None:
+    """Best-effort Telegram `/` menu registration; never blocks boot."""
+    token = os.environ.get("AK_TELEGRAM__BOT_TOKEN", "").strip()
+    if not token:
+        try:
+            from agentkernel.core.config import AKConfig
+
+            token = (AKConfig.get().telegram.bot_token or "").strip()
+        except Exception:  # noqa: BLE001
+            token = ""
+    try:
+        asyncio.run(register_telegram_commands(token or None))
+    except Exception as exc:  # noqa: BLE001
+        logging.getLogger("agripilot.bot_commands").warning("setMyCommands skipped: %s", exc)
+
+
 if __name__ == "__main__":
+    _register_telegram_bot_commands()
     RESTAPI.run([AuthenticatedMobileChatHandler(), FastAckWhatsAppHandler(), GatedTelegramHandler()])

@@ -20,6 +20,15 @@ from agentkernel.core.model import AgentRequestFile, AgentRequestImage, AgentReq
 from agentkernel.whatsapp import AgentWhatsAppRequestHandler
 from fastapi import HTTPException, Request
 
+from channel_handlers.bot_commands import (
+    clear_channel_session,
+    gated_command_note,
+    help_text,
+    new_chat_text,
+    normalize_command,
+    start_text,
+    status_text,
+)
 from channel_handlers.plain_text_format import to_unicode_emphasis
 from marketplace.session_identity import canonical_session_id, seed_marketplace_session
 
@@ -79,6 +88,20 @@ class FastAckWhatsAppHandler(AgentWhatsAppRequestHandler):
         except Exception as exc:  # noqa: BLE001
             self._log.warning("whatsapp gate send failed to %s: %s", to, exc, exc_info=False)
 
+    @staticmethod
+    def _message_text_for_command(message: dict) -> str | None:
+        """Extract plain text used for keyword command detection."""
+        message_type = message.get("type")
+        if message_type == "text":
+            return (message.get("text") or {}).get("body")
+        if message_type == "interactive":
+            interactive = message.get("interactive") or {}
+            if interactive.get("type") == "button_reply":
+                return (interactive.get("button_reply") or {}).get("title")
+            if interactive.get("type") == "list_reply":
+                return (interactive.get("list_reply") or {}).get("title")
+        return None
+
     async def _handle_webhook(self, request: Request) -> dict:
         if self._app_secret:
             signature = request.headers.get("x-hub-signature-256", "")
@@ -100,6 +123,10 @@ class FastAckWhatsAppHandler(AgentWhatsAppRequestHandler):
             return {"status": "ok"}
         filtered: list[tuple[dict, dict]] = []
         for message, value in pending:
+            # Known help/status keywords skip the hard gate (no LLM).
+            if normalize_command(self._message_text_for_command(message)) is not None:
+                filtered.append((message, value))
+                continue
             # wa_id from contacts (preferred) or message from
             wa_id = None
             try:
@@ -312,8 +339,13 @@ class FastAckWhatsAppHandler(AgentWhatsAppRequestHandler):
             self._log.warning("Unsupported message type: %s", message_type)
             return
 
-        requests.insert(0, AgentRequestText(prompt=text))
         farmer = self._lookup_active_farmer(from_number)
+        cmd = normalize_command(text)
+        if cmd is not None:
+            await self._handle_agripilot_command(from_number, cmd, message_id, farmer)
+            return
+
+        requests.insert(0, AgentRequestText(prompt=text))
         if farmer:
             session_id = canonical_session_id(farmer.id)
             acting_user = str(farmer.id)
@@ -351,3 +383,49 @@ class FastAckWhatsAppHandler(AgentWhatsAppRequestHandler):
         except Exception as exc:  # noqa: BLE001
             self._log.error("Error handling message: %s\n%s", exc, traceback.format_exc())
             await self._send_message(from_number, "Sorry, there was an error processing your request.", message_id)
+
+    async def _handle_agripilot_command(self, from_number: str, command: str, message_id: str, farmer) -> None:
+        """Handle help/start/status/new without invoking the LLM."""
+        eligible = farmer is not None
+
+        if command == "/help":
+            body = help_text(channel="whatsapp")
+            if not eligible:
+                body = f"{body}\n\n{gated_command_note(channel='whatsapp')}"
+            await self._send_message(from_number, body, message_id)
+            return
+
+        if command == "/start":
+            if eligible:
+                await self._send_message(from_number, start_text(farmer, eligible=True), message_id)
+            else:
+                signup_url = os.environ.get("AK_MARKETPLACE__SIGNUP_URL") or "http://localhost:8000/docs"
+                await self._send_message(
+                    from_number,
+                    f"Welcome to AgriPilot WhatsApp. Active farmer accounts can ask crop questions "
+                    f"and send plant photos. Sign up at {signup_url}.\n\nSend 'help' for shortcuts.",
+                    message_id,
+                )
+            return
+
+        if command == "/status":
+            await self._send_message(from_number, status_text(farmer, channel="whatsapp"), message_id)
+            return
+
+        if command == "/new":
+            if not eligible:
+                await self._send_message(from_number, gated_command_note(channel="whatsapp"), message_id)
+                return
+            session_id = canonical_session_id(farmer.id)
+            cleared = await clear_channel_session(session_id, farmer)
+            if cleared:
+                await self._send_message(from_number, new_chat_text(), message_id)
+            else:
+                await self._send_message(
+                    from_number,
+                    "Couldn't reset the chat right now. Try again, or keep messaging — a new topic is fine.",
+                    message_id,
+                )
+            return
+
+        await self._send_message(from_number, help_text(channel="whatsapp"), message_id)
