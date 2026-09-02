@@ -43,7 +43,7 @@ def test_landing_page_returns_html():
     assert "Buyers" in body
     assert "Delivery Riders" in body
     assert "support@knurdz.org" in body
-    assert "+94 77 123 4567" in body
+    assert "+1 (555) 678-0512" in body
     assert "https://github.com/knurdz/agent-kernel-agri-pilot" in body
     assert "telegram-chat.jpg" in body
     assert "Telegram Bot in Production" in body

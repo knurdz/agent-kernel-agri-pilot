@@ -97,13 +97,13 @@ def _render_list_items(items: list[str]) -> str:
 
 def _build_landing_html() -> str:
     channels = public_channel_config()
-    wa_me = html.escape(channels.get("whatsapp_wa_me") or "https://wa.me/94771234567")
+    wa_me = html.escape(channels.get("whatsapp_wa_me") or "https://wa.me/15556780512")
     telegram_base = html.escape(channels.get("telegram_deep_link_base") or "https://t.me/agripilot_bot")
-    wa_display = html.escape(channels.get("whatsapp_display_number") or "+94 77 123 4567")
+    wa_display = html.escape(channels.get("whatsapp_display_number") or "+1 (555) 678-0512")
     telegram_label = html.escape(channels.get("telegram_bot_username") or "agripilot_bot")
     contact_email = "support@knurdz.org"
-    contact_phone = "+94 77 123 4567"
-    contact_phone_raw = "+94771234567"
+    contact_phone = "+1 (555) 678-0512"
+    contact_phone_raw = "+15556780512"
     repo_url = "https://github.com/knurdz/agent-kernel-agri-pilot"
     framework_url = "https://github.com/yaalalabs/agent-kernel"
     download_url = "/download"

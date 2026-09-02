@@ -20,6 +20,7 @@ from agentkernel.core.model import AgentRequestFile, AgentRequestImage, AgentReq
 from agentkernel.whatsapp import AgentWhatsAppRequestHandler
 from fastapi import HTTPException, Request
 
+from channel_handlers.plain_text_format import to_unicode_emphasis
 from marketplace.session_identity import canonical_session_id, seed_marketplace_session
 
 
@@ -346,7 +347,7 @@ class FastAckWhatsAppHandler(AgentWhatsAppRequestHandler):
                         await runtime.sessions().store(session)
                 except Exception:
                     pass
-            await self._send_message(from_number, str(result), message_id)
+            await self._send_message(from_number, to_unicode_emphasis(str(result)), message_id)
         except Exception as exc:  # noqa: BLE001
             self._log.error("Error handling message: %s\n%s", exc, traceback.format_exc())
             await self._send_message(from_number, "Sorry, there was an error processing your request.", message_id)
