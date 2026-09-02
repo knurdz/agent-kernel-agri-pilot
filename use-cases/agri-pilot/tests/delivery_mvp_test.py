@@ -243,6 +243,54 @@ def test_delivery_flow_pickup():
     assert listing_row.quantity_kg == 400
 
 
+def test_pickup_handoff_sold_out_listing_allows_zero_quantity():
+    """Full sell-out sets quantity_kg=0 and status=sold without violating the DB check."""
+    client, Session = _app_client()
+    db = Session()
+    farmer, buyer, _, listing, conn = _seed_marketplace(db)
+    buyer_phone = buyer.phone_number
+    farmer_phone = farmer.phone_number
+    conn_id = conn.id
+    listing_id = listing.id
+    full_qty = float(listing.quantity_kg)
+    db.close()
+
+    buyer_tok = _token(client, buyer_phone)
+    order_resp = client.post(
+        "/api/buyer/orders",
+        headers={"Authorization": f"Bearer {buyer_tok}"},
+        json={"connection_id": conn_id, "quantity_kg": full_qty, "fulfillment_mode": "pickup"},
+    )
+    assert order_resp.status_code == 201, order_resp.text
+    order_id = order_resp.json()["order"]["id"]
+    pin = order_resp.json()["handoff_pin"]
+
+    farmer_tok = _token(client, farmer_phone)
+    confirm = client.post(
+        f"/api/farmer/orders/{order_id}/confirm",
+        headers={"Authorization": f"Bearer {farmer_tok}"},
+        json={"confirmed_quantity_kg": full_qty, "pickup_latitude": 7.29, "pickup_longitude": 80.63},
+    )
+    assert confirm.status_code == 200, confirm.text
+    ready = client.post(f"/api/farmer/orders/{order_id}/ready", headers={"Authorization": f"Bearer {farmer_tok}"})
+    assert ready.status_code == 200, ready.text
+
+    handoff = client.post(
+        f"/api/buyer/orders/{order_id}/confirm-handoff",
+        headers={"Authorization": f"Bearer {buyer_tok}"},
+        json={"pin": pin},
+    )
+    assert handoff.status_code == 200, handoff.text
+    assert handoff.json()["status"] == "delivered"
+
+    db = Session()
+    listing_row = db.get(Listing, listing_id)
+    assert listing_row.status == "sold"
+    assert listing_row.quantity_kg == 0
+    assert listing_row.reserved_quantity_kg == 0
+    db.close()
+
+
 def test_delivery_flow_with_rider_dispatch():
     client, Session = _app_client()
     db = Session()

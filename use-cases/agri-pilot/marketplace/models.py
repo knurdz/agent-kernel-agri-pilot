@@ -188,7 +188,7 @@ class RiderProfile(Base):
 class Listing(Base):
     __tablename__ = "listings"
     __table_args__ = (
-        CheckConstraint("quantity_kg > 0", name="ck_listing_quantity_positive"),
+        CheckConstraint("quantity_kg > 0 OR status != 'active'", name="ck_listing_quantity_positive"),
         CheckConstraint("price_per_kg IS NULL OR price_per_kg >= 0", name="ck_listing_price_non_negative"),
         CheckConstraint("reserved_quantity_kg >= 0", name="ck_listing_reserved_non_negative"),
         Index("ix_listings_status_crop", "status", "crop"),
