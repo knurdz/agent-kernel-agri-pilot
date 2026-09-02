@@ -27,6 +27,14 @@ from agentkernel.core.model import AgentRequestText, BaseChatRequest
 from agentkernel.telegram import AgentTelegramRequestHandler
 from sqlalchemy.exc import IntegrityError
 
+from channel_handlers.bot_commands import (
+    clear_channel_session,
+    help_text,
+    new_chat_text,
+    normalize_command,
+    start_text,
+    status_text,
+)
 from channel_handlers.plain_text_format import to_unicode_emphasis
 from marketplace.session_identity import canonical_session_id, seed_marketplace_session
 
@@ -223,6 +231,13 @@ class GatedTelegramHandler(AgentTelegramRequestHandler):
             if await self._try_link_via_start_token(message):
                 return
 
+        # Known slash commands (help/status/new/start) — no LLM, allowed before gate
+        if message is not None and isinstance(message.get("text"), str):
+            cmd = normalize_command(message["text"])
+            if cmd is not None:
+                await self._handle_agripilot_command(chat_id, cmd, message)
+                return
+
         try:
             from sqlalchemy import select
 
@@ -258,6 +273,69 @@ class GatedTelegramHandler(AgentTelegramRequestHandler):
     async def _delegate(self, body: dict) -> None:
         """Hand a passing update to the stock pipeline (seam for tests)."""
         await super()._process_webhook_body(body)
+
+    def _lookup_telegram_user(self, chat_id):
+        try:
+            from sqlalchemy import select
+
+            from marketplace.models import User
+
+            db = self._open_db()
+            try:
+                return db.scalars(select(User).where(User.telegram_chat_id == int(chat_id))).first()
+            finally:
+                db.close()
+        except Exception:
+            return None
+
+    async def _handle_command(self, chat_id: int, command: str):
+        """Override stock AK /start /help with AgriPilot handlers (skip-gate / linked path)."""
+        cmd = normalize_command(command)
+        if cmd is None:
+            await self._process_agent_message(chat_id, command)
+            return
+        await self._handle_agripilot_command(chat_id, cmd, {"chat": {"id": chat_id}, "text": command})
+
+    async def _handle_agripilot_command(self, chat_id, command: str, message: dict | None = None) -> None:
+        """Handle /start /help /status /new without invoking the LLM."""
+        user = self._lookup_telegram_user(chat_id)
+        eligible = self._eligible(user)
+
+        if command == "/start":
+            if user is None:
+                await self._send_link_prompt(chat_id)
+                return
+            if not eligible:
+                await self._send_signup_notice(chat_id)
+                return
+            await self._send_message(chat_id, start_text(user, eligible=True))
+            return
+
+        if command == "/help":
+            await self._send_message(chat_id, help_text(channel="telegram"))
+            return
+
+        if command == "/status":
+            await self._send_message(chat_id, status_text(user, channel="telegram"))
+            return
+
+        if command == "/new":
+            if user is not None and eligible:
+                session_id = canonical_session_id(user.id)
+                cleared = await clear_channel_session(session_id, user)
+            else:
+                session_id = str(chat_id)
+                cleared = await clear_channel_session(session_id, None)
+            if cleared:
+                await self._send_message(chat_id, new_chat_text())
+            else:
+                await self._send_message(
+                    chat_id,
+                    "Couldn't reset the chat right now. Try again, or keep messaging — a new topic is fine.",
+                )
+            return
+
+        await self._process_agent_message(chat_id, command, message)
 
     async def _process_agent_message(self, chat_id: int, message_text: str, message: dict | None = None):
         """Process message through agent with unified session id when linked farmer."""
