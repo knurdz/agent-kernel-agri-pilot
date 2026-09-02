@@ -81,8 +81,8 @@ thread:
     prefix: "ak:thread:"
 
 channels:
-  whatsapp_display_number: "+94 77 123 4567"
-  whatsapp_wa_me: "https://wa.me/94771234567"
+  whatsapp_display_number: "+1 (555) 678-0512"
+  whatsapp_wa_me: "https://wa.me/15556780512"
   telegram_bot_username: "agripilot_bot"
 
 notifications:

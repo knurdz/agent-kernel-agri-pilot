@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any, List, Optional
 
 from agentkernel.core.model import AgentRequest, BaseChatRequest
 
+from channel_handlers.plain_text_format import to_unicode_emphasis
 from marketplace.session_identity import canonical_session_id, seed_marketplace_session
 
 if TYPE_CHECKING:
@@ -57,7 +58,7 @@ async def execute_channel_chat(
         except Exception:
             handler._log.debug("session seed skipped", exc_info=True)
 
-        response_text = str(result)
+        response_text = to_unicode_emphasis(str(result))
         handler._log.debug("Agent response: %s", response_text[:200])
         await handler._send_message(reply_to, response_text, getattr(handler, "_last_message_id", None))
     except Exception as exc:  # noqa: BLE001

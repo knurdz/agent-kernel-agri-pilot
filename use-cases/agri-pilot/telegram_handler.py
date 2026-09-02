@@ -27,6 +27,7 @@ from agentkernel.core.model import AgentRequestText, BaseChatRequest
 from agentkernel.telegram import AgentTelegramRequestHandler
 from sqlalchemy.exc import IntegrityError
 
+from channel_handlers.plain_text_format import to_unicode_emphasis
 from marketplace.session_identity import canonical_session_id, seed_marketplace_session
 
 
@@ -319,7 +320,7 @@ class GatedTelegramHandler(AgentTelegramRequestHandler):
                         await runtime.sessions().store(session)
                 except Exception:
                     pass
-            await self._send_message(chat_id, str(result))
+            await self._send_message(chat_id, to_unicode_emphasis(str(result)))
         except Exception as exc:  # noqa: BLE001
             self._gate_log.error("Error handling message: %s\n%s", exc, traceback.format_exc())
             await self._send_message(chat_id, "Sorry, there was an error processing your request.")
